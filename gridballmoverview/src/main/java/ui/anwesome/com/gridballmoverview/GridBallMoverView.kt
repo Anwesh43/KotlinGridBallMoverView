@@ -95,4 +95,20 @@ class GridBallMoverView(ctx : Context) : View(ctx) {
             state.startUpdating(startcb)
         }
     }
+    data class Renderer(var view : GridBallMoverView, val gridBallMover : GridBallMover = GridBallMover(0), val animator : Animator = Animator(view)) {
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(Color.parseColor("#212121"))
+            gridBallMover.draw(canvas, paint)
+            animator.animate {
+                gridBallMover.update {
+                    animator.stop()
+                }
+            }
+        }
+        fun handleTap() {
+            gridBallMover.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
