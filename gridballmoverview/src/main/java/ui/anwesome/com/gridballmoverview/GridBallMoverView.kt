@@ -73,10 +73,11 @@ class GridBallMoverView(ctx : Context) : View(ctx) {
         fun draw(canvas : Canvas, paint : Paint) {
             val w = canvas.width.toFloat()
             val h = canvas.height.toFloat()
+            paint.color = Color.parseColor("#f1c407")
             val size = Math.min(w,h)/3
             val r = size/15
             canvas.save()
-            canvas.translate(w/2 * (1 - state.scales[2]), h/2)
+            canvas.translate(-r + (w/2+r) * (1 - state.scales[2]), h/2)
             canvas.save()
             canvas.translate(-size, -size)
             for (i in 0..8) {
@@ -117,7 +118,7 @@ class GridBallMoverView(ctx : Context) : View(ctx) {
         fun create(activity : Activity) : GridBallMoverView {
             val view = GridBallMoverView(activity)
             activity.setContentView(view)
-            return view 
+            return view
         }
     }
 }
