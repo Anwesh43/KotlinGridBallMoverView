@@ -63,8 +63,36 @@ class GridBallMoverView(ctx : Context) : View(ctx) {
         }
         fun stop() {
             if (animated) {
-                animated = false 
+                animated = false
             }
+        }
+    }
+    data class GridBallMover(var i : Int, val state : State = State()) {
+        fun draw(canvas : Canvas, paint : Paint) {
+            val w = canvas.width.toFloat()
+            val h = canvas.height.toFloat()
+            val size = Math.min(w,h)/3
+            val r = size/15
+            canvas.save()
+            canvas.translate(w/2 * (1 - state.scales[2]), h/2)
+            canvas.save()
+            canvas.translate(-size, -size)
+            for (i in 0..8) {
+                val x = size/3 + (2 * size/3) * (i%3)
+                val y = size/3 + (2 * size/3) * (i/3)
+                canvas.save()
+                canvas.translate(x + (size - x) * state.scales[1], y + (size - y) * state.scales[1])
+                canvas.drawCircle(0f, 0f, r * state.scales[0], paint)
+                canvas.restore()
+            }
+            canvas.restore()
+            canvas.restore()
+        }
+        fun update(stopcb : (Float) -> Unit) {
+            state.update(stopcb)
+        }
+        fun startUpdating(startcb : () -> Unit) {
+            state.startUpdating(startcb)
         }
     }
 }
