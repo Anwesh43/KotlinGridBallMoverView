@@ -3,6 +3,7 @@ package ui.anwesome.com.gridballmoverview
 /**
  * Created by anweshmishra on 24/03/18.
  */
+import android.app.Activity
 import android.content.*
 import android.graphics.*
 import android.view.*
@@ -110,6 +111,13 @@ class GridBallMoverView(ctx : Context) : View(ctx) {
             gridBallMover.startUpdating {
                 animator.start()
             }
+        }
+    }
+    companion object {
+        fun create(activity : Activity) : GridBallMoverView {
+            val view = GridBallMoverView(activity)
+            activity.setContentView(view)
+            return view 
         }
     }
 }
